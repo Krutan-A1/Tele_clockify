@@ -4,19 +4,13 @@ import json
 
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
-model = genai.GenerativeModel("gemini-1.5-flash")
+model = genai.GenerativeModel("gemini-pro")
 
 def parse_message(text):
     prompt = f"""
 Convert this message into structured JSON.
 
 Message: "{text}"
-
-Rules:
-- Extract project name
-- Extract task
-- Extract duration in minutes
-- Clean description
 
 Return ONLY JSON:
 
@@ -29,9 +23,9 @@ Return ONLY JSON:
 """
 
     response = model.generate_content(prompt)
+
     content = response.text.strip()
 
-    # Fix common AI formatting issues
     content = content.replace("```json", "").replace("```", "").strip()
 
     try:
