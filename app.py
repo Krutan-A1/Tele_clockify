@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, json, request
 import requests
 import os
 import uuid
@@ -24,6 +24,7 @@ pending_requests = {}
 # Telegram Send Message
 # ---------------------------
 def send_message(chat_id, text, keyboard=None):
+    print(f"📤 Sending message to Telegram: {text}")  # 🔥 ADD THIS
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
 
     payload = {
@@ -34,7 +35,9 @@ def send_message(chat_id, text, keyboard=None):
     if keyboard:
         payload["reply_markup"] = keyboard
 
-    requests.post(url, json=payload)
+    res = requests.post(url, json=payload)
+
+    print("📤 Telegram response:", res.status_code, res.text)  # 🔥 ADD THIS
 
 
 # ---------------------------
@@ -147,8 +150,7 @@ Desc: {parsed['description']}
         ]]
     }
 
-    send_message(chat_id, confirm_text, keyboard)
-
+    send_message(chat_id, confirm_text, json.dumps(keyboard))  # 👈 FIX
     return "ok"
 
 
