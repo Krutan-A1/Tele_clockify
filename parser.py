@@ -3,21 +3,37 @@ import os
 import json
 import re
 from dotenv import load_dotenv
-from google.api_core.exceptions import ResourceExhausted
+
+# ---------------------------
+# Load ENV only once
+# ---------------------------
+load_dotenv()
+
+api_key = os.getenv("GEMINI_API_KEY")
+if not api_key:
+    raise ValueError("❌ GEMINI_API_KEY not found")
+
+genai.configure(api_key=api_key)
+
+# Initialize model ONCE
+model = genai.GenerativeModel("models/gemini-pro")
 
 
-
+# ---------------------------
+# Fallback Parser
+# ---------------------------
 def fallback_parse(text):
-    """Simple manual parser if AI fails"""
     duration = 60
 
-    # extract hours like 2h, 1.5h
-    match = re.search(r"(\d+(\.\d+)?)\s*h", text.lower())
+    text_lower = text.lower()
+
+    # hours: 2h, 1.5h
+    match = re.search(r"(\d+(\.\d+)?)\s*h", text_lower)
     if match:
         duration = int(float(match.group(1)) * 60)
 
-    # extract minutes like 30m
-    match = re.search(r"(\d+)\s*m", text.lower())
+    # minutes: 30m
+    match = re.search(r"(\d+)\s*m", text_lower)
     if match:
         duration = int(match.group(1))
 
@@ -29,6 +45,9 @@ def fallback_parse(text):
     }
 
 
+# ---------------------------
+# Main Parser
+# ---------------------------
 def parse_message(text):
     prompt = f"""
 Convert this message into structured JSON.
@@ -44,18 +63,6 @@ Return ONLY JSON:
   "description": ""
 }}
 """
-    load_dotenv()
-
-    # Configure Gemini
-    api_key = os.getenv("GEMINI_API_KEY")
-    if not api_key:
-        raise ValueError("❌ GEMINI_API_KEY not found")
-
-    genai.configure(api_key=api_key)
-
-    # Use stable model
-    model = genai.GenerativeModel("models/gemini-pro")
-
 
     try:
         response = model.generate_content(prompt)
@@ -66,10 +73,10 @@ Return ONLY JSON:
         return json.loads(content)
 
     except Exception as e:
-        error_text = str(e)
+        error_text = str(e).lower()
 
-        # 🔴 Detect quota error (important)
-        if "quota" in error_text.lower() or "429" in error_text:
+        # 🔴 Handle quota error
+        if "quota" in error_text or "429" in error_text:
             retry_time = 30
 
             if "retry_delay" in error_text:
