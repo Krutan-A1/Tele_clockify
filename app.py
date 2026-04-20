@@ -1,167 +1,130 @@
-from flask import Flask, json, request
-import requests
 import os
-import uuid
-import logging
+import json
+import re
+import requests
+from flask import Flask, request, jsonify
 from dotenv import load_dotenv
+import google.generativeai as genai
 
-from parser import parse_message
-
+# ---------------------------
+# Initialization
+# ---------------------------
 load_dotenv()
 
 app = Flask(__name__)
 
-logging.basicConfig(level=logging.INFO)
+# Config
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 
-TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
-CLOCKIFY_API_KEY = os.getenv("CLOCKIFY_API_KEY")
-WORKSPACE_ID = os.getenv("CLOCKIFY_WORKSPACE_ID")
+if not GEMINI_API_KEY or not TELEGRAM_TOKEN:
+    raise ValueError("❌ Environment variables GEMINI_API_KEY or TELEGRAM_BOT_TOKEN missing")
 
-pending_requests = {}
+# Clean token (prevents 404 error if .env has spaces)
+TELEGRAM_TOKEN = TELEGRAM_TOKEN.strip()
+TELEGRAM_API_URL = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}"
 
+# Gemini Setup
+genai.configure(api_key=GEMINI_API_KEY)
+model = genai.GenerativeModel("gemini-2.5-flash")  # Use the latest flash model for best performance
 
 # ---------------------------
-# Telegram Send Message
+# Logic Functions
 # ---------------------------
-def send_message(chat_id, text, keyboard=None):
-    print(f"📤 Sending message to Telegram: {text}")  # 🔥 ADD THIS
-    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
 
+def fallback_parse(text):
+    """Parses message using RegEx if AI fails."""
+    duration = 60
+    text_lower = text.lower()
+    
+    # hours: 2h, 1.5h
+    match = re.search(r"(\d+(\.\d+)?)\s*h", text_lower)
+    if match:
+        duration = int(float(match.group(1)) * 60)
+    
+    # minutes: 30m
+    match = re.search(r"(\d+)\s*m", text_lower)
+    if match:
+        duration = int(match.group(1))
+
+    return {
+        "project": "General",
+        "task": "Work",
+        "duration_minutes": duration,
+        "description": text
+    }
+
+def parse_message_with_ai(text):
+    """Sends user text to Gemini and returns structured JSON."""
+    prompt = f"""
+Convert this message into structured JSON.
+Message: "{text}"
+
+Return ONLY JSON:
+{{
+  "project": "",
+  "task": "",
+  "duration_minutes": number,
+  "description": ""
+}}
+"""
+    try:
+        response = model.generate_content(prompt)
+        content = response.text.strip()
+        # Clean Markdown formatting if present
+        content = content.replace("```json", "").replace("```", "").strip()
+        print(f"✅ AI Response: {content}")
+        return json.loads(content)
+    except Exception as e:
+        print(f"⚠️ AI Error: {e}")
+        return fallback_parse(text)
+
+def send_telegram_message(chat_id, text):
+    """Sends response back to Telegram."""
+    url = f"{TELEGRAM_API_URL}/sendMessage"
     payload = {
         "chat_id": chat_id,
         "text": text,
+        "parse_mode": "Markdown"
     }
-
-    if keyboard:
-        payload["reply_markup"] = keyboard
-
-    res = requests.post(url, json=payload)
-
-    print("📤 Telegram response:", res.status_code, res.text)  # 🔥 ADD THIS
-
+    
+    response = requests.post(url, json=payload)
+    
+    if response.status_code != 200:
+        print(f"❌ Telegram Error {response.status_code}: {response.text}")
+    return response.json()
 
 # ---------------------------
-# Clockify API
+# Webhook Route
 # ---------------------------
-def create_time_entry(data):
-    url = f"https://api.clockify.me/api/v1/workspaces/{WORKSPACE_ID}/time-entries"
 
-    payload = {
-        "start": "2026-01-01T09:00:00Z",
-        "duration": f"PT{data['duration_minutes']}M",
-        "description": data["description"]
-    }
-
-    headers = {
-        "X-Api-Key": CLOCKIFY_API_KEY,
-        "Content-Type": "application/json"
-    }
-
-    res = requests.post(url, json=payload, headers=headers)
-
-    return res.status_code, res.text
-
-
-# ---------------------------
-# Webhook
-# ---------------------------
-@app.route("/webhook", methods=["POST"])
+@app.route('/webhook', methods=['POST'])
 def webhook():
-    data = request.json
-    logging.info(f"Incoming request: {data}")
+    data = request.get_json()
+    
+    # Ensure we have a message
+    if "message" in data and "text" in data["message"]:
+        chat_id = data["message"]["chat"]["id"]
+        user_text = data["message"]["text"]
+        
+        # 1. Process with AI
+        structured_data = parse_message_with_ai(user_text)
+        
+        # 2. Format Response
+        reply = (
+            f"*✅ Task Parsed Successfully*\n\n"
+            f"📂 *Project:* {structured_data.get('project')}\n"
+            f"📝 *Task:* {structured_data.get('task')}\n"
+            f"⏱️ *Duration:* {structured_data.get('duration_minutes')} mins\n"
+            f"📖 *Desc:* {structured_data.get('description')}"
+        )
+        
+        # 3. Send Back
+        send_telegram_message(chat_id, reply)
+        
+    return "OK", 200
 
-    # ---------------------------
-    # Handle Confirm Button
-    # ---------------------------
-    if "callback_query" in data:
-        callback = data["callback_query"]
-        chat_id = callback["message"]["chat"]["id"]
-        action = callback["data"]
-
-        if action in pending_requests:
-            parsed = pending_requests[action]
-
-            status, res = create_time_entry(parsed)
-
-            if status == 201:
-                send_message(chat_id, "✅ Time entry created!")
-            else:
-                send_message(chat_id, f"❌ Clockify error: {res}")
-
-            del pending_requests[action]
-
-        return "ok"
-
-    # ---------------------------
-    # Handle Message
-    # ---------------------------
-    message = data.get("message", {})
-    chat_id = message.get("chat", {}).get("id")
-    text = message.get("text", "")
-
-    logging.info(f"User message: {text}")
-
-    # Handle commands
-    if text.startswith("/"):
-        send_message(chat_id, "👋 Send something like:\nWorked 2h on vigil API")
-        return "ok"
-
-    # ---------------------------
-    # Parse with AI
-    # ---------------------------
-    try:
-        parsed = parse_message(text)
-
-    except Exception as e:
-        error_msg = str(e)
-
-        if error_msg.startswith("RATE_LIMIT"):
-            wait_time = error_msg.split(":")[1]
-
-            send_message(
-                chat_id,
-                f"⏳ AI quota reached.\nPlease try again in {wait_time} seconds."
-            )
-            return "ok"
-
-        send_message(chat_id, "❌ Error parsing message. Try again.")
-        return "ok"
-
-    logging.info(f"Parsed JSON: {parsed}")
-
-    # ---------------------------
-    # Ask for confirmation
-    # ---------------------------
-    request_id = str(uuid.uuid4())
-    pending_requests[request_id] = parsed
-
-    confirm_text = f"""
-Confirm entry:
-
-Project: {parsed['project']}
-Task: {parsed['task']}
-Duration: {parsed['duration_minutes']} min
-Desc: {parsed['description']}
-"""
-
-    keyboard = {
-        "inline_keyboard": [[
-            {"text": "✅ Confirm", "callback_data": request_id}
-        ]]
-    }
-
-    send_message(chat_id, confirm_text, json.dumps(keyboard))  # 👈 FIX
-    return "ok"
-
-
-# ---------------------------
-# Health Check
-# ---------------------------
-@app.route("/")
-def home():
-    return "Bot is running!"
-
-
-if __name__ == "__main__":
+if __name__ == '__main__':
+    # Use port 5000 for local development (or whatever matches your webhook config)
     port = int(os.environ.get("PORT", 5000))
-    app.run(debug=True, host="0.0.0.0", port=port)
+    app.run(port=port, debug=True , host="0.0.0.0")
