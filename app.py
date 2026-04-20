@@ -42,22 +42,18 @@ def webhook():
 
     logging.info(f"Incoming request: {data}")
 
-    # Handle confirm button
+    # ---------------------------
+    # Handle callback
+    # ---------------------------
     if "callback_query" in data:
         callback = data["callback_query"]
         chat_id = callback["message"]["chat"]["id"]
         action = callback["data"]
 
-        logging.info(f"User clicked confirm: {action}")
-
         if action in pending_requests:
             parsed = pending_requests[action]
 
-            logging.info(f"Sending to Clockify: {parsed}")
-
             status, res = create_time_entry(parsed)
-
-            logging.info(f"Clockify response: {status} - {res}")
 
             if status == 201:
                 send_message(chat_id, "✅ Time entry created!")
@@ -66,19 +62,47 @@ def webhook():
 
             del pending_requests[action]
 
-        return "ok"
+        return "ok"   # ✅ IMPORTANT
 
+    # ---------------------------
     # Handle normal message
+    # ---------------------------
     message = data.get("message", {})
     chat_id = message.get("chat", {}).get("id")
     text = message.get("text", "")
 
     logging.info(f"User message: {text}")
 
-    parsed = parse_message(text)
+    # Handle commands
+    if text.startswith("/"):
+        send_message(chat_id, "👋 Send: Worked 2h on vigil API")
+        return "ok"   # ✅ IMPORTANT
 
+    # Parse
+    parsed = parse_message(text)
     logging.info(f"Parsed JSON: {parsed}")
 
+    request_id = str(uuid.uuid4())
+    pending_requests[request_id] = parsed
+
+    confirm_text = f"""
+Confirm entry:
+
+Project: {parsed['project']}
+Task: {parsed['task']}
+Duration: {parsed['duration_minutes']} min
+Desc: {parsed['description']}
+"""
+
+    keyboard = {
+        "inline_keyboard": [[
+            {"text": "✅ Confirm", "callback_data": request_id}
+        ]]
+    }
+
+    send_message(chat_id, confirm_text, keyboard)
+
+    return "ok"   # ✅ MUST BE HERE
 # ---------------------------
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))

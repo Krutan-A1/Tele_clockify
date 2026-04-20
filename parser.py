@@ -2,9 +2,8 @@ import google.generativeai as genai
 import os
 import json
 
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
-model = genai.GenerativeModel("gemini-pro")
+
 
 def parse_message(text):
     prompt = f"""
@@ -21,6 +20,11 @@ Return ONLY JSON:
   "description": ""
 }}
 """
+    
+    genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+
+    model = genai.GenerativeModel("gemini-2.5-flash")
+    
 
     response = model.generate_content(prompt)
 
