@@ -44,7 +44,6 @@ Return ONLY JSON:
   "description": ""
 }}
 """
-    
     load_dotenv()
 
     # Configure Gemini
@@ -60,20 +59,30 @@ Return ONLY JSON:
 
     try:
         response = model.generate_content(prompt)
+
         content = response.text.strip()
         content = content.replace("```json", "").replace("```", "").strip()
 
         return json.loads(content)
 
-    except ResourceExhausted as e:
-        retry_time = 20
-        try:
-            retry_time = int(e.retry_delay.seconds)
-        except:
-            pass
-
-        raise Exception(f"RATE_LIMIT:{retry_time}")
-
     except Exception as e:
+        error_text = str(e)
+
+        # 🔴 Detect quota error (important)
+        if "quota" in error_text.lower() or "429" in error_text:
+            retry_time = 30
+
+            if "retry_delay" in error_text:
+                try:
+                    retry_time = int(
+                        error_text.split("seconds")[0].split()[-1]
+                    )
+                except:
+                    pass
+
+            raise Exception(f"RATE_LIMIT:{retry_time}")
+
+        # 🟡 fallback instead of crash
         print("⚠️ AI failed, using fallback:", e)
+
         return fallback_parse(text)
