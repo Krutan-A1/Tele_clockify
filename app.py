@@ -1,130 +1,175 @@
 import os
 import json
-import re
-import requests
-from flask import Flask, request, jsonify
-from dotenv import load_dotenv
-import google.generativeai as genai
+import threading
+from difflib import get_close_matches
 
-# ---------------------------
-# Initialization
-# ---------------------------
+import requests
+from flask import Flask, request
+from dotenv import load_dotenv
+
+from parser import parse_message
+from clockify import get_projects, get_tasks, create_task, create_time_entry
+
 load_dotenv()
 
 app = Flask(__name__)
 
-# Config
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-TELEGRAM_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
-
-if not GEMINI_API_KEY or not TELEGRAM_TOKEN:
-    raise ValueError("❌ Environment variables GEMINI_API_KEY or TELEGRAM_BOT_TOKEN missing")
-
-# Clean token (prevents 404 error if .env has spaces)
-TELEGRAM_TOKEN = TELEGRAM_TOKEN.strip()
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN").strip()
 TELEGRAM_API_URL = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}"
 
-# Gemini Setup
-genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel("gemini-2.5-flash")  # Use the latest flash model for best performance
+pending_context = {}
+lock = threading.Lock()
+
 
 # ---------------------------
-# Logic Functions
+# Helpers
 # ---------------------------
 
-def fallback_parse(text):
-    """Parses message using RegEx if AI fails."""
-    duration = 60
-    text_lower = text.lower()
-    
-    # hours: 2h, 1.5h
-    match = re.search(r"(\d+(\.\d+)?)\s*h", text_lower)
-    if match:
-        duration = int(float(match.group(1)) * 60)
-    
-    # minutes: 30m
-    match = re.search(r"(\d+)\s*m", text_lower)
-    if match:
-        duration = int(match.group(1))
+def send(chat_id, text, keyboard=None):
+    payload = {"chat_id": chat_id, "text": text}
+    if keyboard:
+        payload["reply_markup"] = json.dumps(keyboard)
 
+    requests.post(f"{TELEGRAM_API_URL}/sendMessage", data=payload)
+
+
+def answer(cb_id):
+    requests.post(f"{TELEGRAM_API_URL}/answerCallbackQuery", data={"callback_query_id": cb_id})
+
+
+def keyboard():
     return {
-        "project": "General",
-        "task": "Work",
-        "duration_minutes": duration,
-        "description": text
+        "inline_keyboard": [[
+            {"text": "✅ Confirm", "callback_data": "confirm"},
+            {"text": "❌ Cancel", "callback_data": "cancel"}
+        ]]
     }
 
-def parse_message_with_ai(text):
-    """Sends user text to Gemini and returns structured JSON."""
-    prompt = f"""
-Convert this message into structured JSON.
-Message: "{text}"
 
-Return ONLY JSON:
-{{
-  "project": "",
-  "task": "",
-  "duration_minutes": number,
-  "description": ""
-}}
-"""
-    try:
-        response = model.generate_content(prompt)
-        content = response.text.strip()
-        # Clean Markdown formatting if present
-        content = content.replace("```json", "").replace("```", "").strip()
-        print(f"✅ AI Response: {content}")
-        return json.loads(content)
-    except Exception as e:
-        print(f"⚠️ AI Error: {e}")
-        return fallback_parse(text)
+def norm(x):
+    return (x or "").lower().strip()
 
-def send_telegram_message(chat_id, text):
-    """Sends response back to Telegram."""
-    url = f"{TELEGRAM_API_URL}/sendMessage"
-    payload = {
-        "chat_id": chat_id,
-        "text": text,
-        "parse_mode": "Markdown"
-    }
-    
-    response = requests.post(url, json=payload)
-    
-    if response.status_code != 200:
-        print(f"❌ Telegram Error {response.status_code}: {response.text}")
-    return response.json()
+
+def match(name, items):
+    if not name:
+        return None
+
+    name = norm(name)
+    mapping = {norm(i["name"]): i for i in items}
+
+    if name in mapping:
+        return mapping[name]
+
+    for k, v in mapping.items():
+        if name in k:
+            return v
+
+    close = get_close_matches(name, mapping.keys(), n=1, cutoff=0.6)
+    if close:
+        return mapping[close[0]]
+
+    return None
+
 
 # ---------------------------
-# Webhook Route
+# Routes
 # ---------------------------
 
-@app.route('/webhook', methods=['POST'])
+@app.route("/")
+def home():
+    return "Server running 🚀"
+
+
+@app.route("/webhook", methods=["POST"])
 def webhook():
-    data = request.get_json()
-    
-    # Ensure we have a message
+    data = request.get_json(silent=True) or {}
+    print("🔥 Incoming:", json.dumps(data, indent=2))
+
+    # MESSAGE
     if "message" in data and "text" in data["message"]:
-        chat_id = data["message"]["chat"]["id"]
-        user_text = data["message"]["text"]
-        
-        # 1. Process with AI
-        structured_data = parse_message_with_ai(user_text)
-        
-        # 2. Format Response
-        reply = (
-            f"*✅ Task Parsed Successfully*\n\n"
-            f"📂 *Project:* {structured_data.get('project')}\n"
-            f"📝 *Task:* {structured_data.get('task')}\n"
-            f"⏱️ *Duration:* {structured_data.get('duration_minutes')} mins\n"
-            f"📖 *Desc:* {structured_data.get('description')}"
+        chat_id = str(data["message"]["chat"]["id"])
+        text = data["message"]["text"]
+
+        projects = get_projects()
+        project_names = [p["name"] for p in projects]
+
+        parsed = parse_message(text, project_names)
+        print("🧠 Parsed:", parsed)
+
+        project = match(parsed.get("project"), projects)
+
+        if not project:
+            send(chat_id, f"❌ Project not found.\nTry: {', '.join(project_names[:5])}")
+            return "OK", 200
+
+        tasks = get_tasks(project["id"])
+
+        task = match(parsed.get("task"), tasks)
+
+        if not task:
+            # auto create task
+            new_task = create_task(project["id"], parsed.get("task") or "General")
+            task_id = new_task["id"]
+            task_name = new_task["name"]
+        else:
+            task_id = task["id"]
+            task_name = task["name"]
+
+        pending_context[chat_id] = {
+            "parsed": parsed,
+            "project": project,
+            "task": {"id": task_id, "name": task_name}
+        }
+
+        msg = (
+            f"📂 {project['name']}\n"
+            f"📝 {task_name}\n"
+            f"⏱ {parsed['duration_minutes']} mins\n"
+            f"📖 {parsed['description']}\n\nConfirm?"
         )
-        
-        # 3. Send Back
-        send_telegram_message(chat_id, reply)
-        
+
+        send(chat_id, msg, keyboard())
+        return "OK", 200
+
+    # BUTTON
+    if "callback_query" in data:
+        cb = data["callback_query"]
+        chat_id = str(cb["message"]["chat"]["id"])
+        action = cb["data"]
+
+        answer(cb["id"])
+
+        pending = pending_context.get(chat_id)
+
+        if not pending:
+            send(chat_id, "❌ No pending task")
+            return "OK", 200
+
+        if action == "cancel":
+            pending_context.pop(chat_id, None)
+            send(chat_id, "❌ Cancelled")
+            return "OK", 200
+
+        if action == "confirm":
+            payload = {
+                "description": pending["parsed"]["description"],
+                "duration_minutes": pending["parsed"]["duration_minutes"],
+                "projectId": pending["project"]["id"],
+                "taskId": pending["task"]["id"]
+            }
+
+            status, resp = create_time_entry(payload)
+
+            if 200 <= status < 300:
+                send(chat_id, "✅ Entry created")
+                pending_context.pop(chat_id, None)
+            else:
+                send(chat_id, f"❌ Failed:\n{resp}")
+
+        return "OK", 200
+
     return "OK", 200
 
-if __name__ == '__main__':
-    # Use port 5000 for local development (or whatever matches your webhook config)
-    port = int(os.environ.get("PORT", 5000))
-    app.run(port=port, debug=True , host="0.0.0.0")
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)

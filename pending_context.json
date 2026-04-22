@@ -1,0 +1,55 @@
+{
+  "1100131965": {
+    "parsed": {
+      "project": "weldsense",
+      "task": "testing",
+      "duration_minutes": 60,
+      "description": "did 1 hour testing on weldsense project"
+    },
+    "project": {
+      "id": "671efbd8bd91bc5e5dfdeed4",
+      "name": "BSF 15 meter WeldSense demo at West Bengal",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "65782aa511ab57349ff35ad7",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "63f34ec75f9c6f02feb54778",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "671efbd8bd91bc5e5dfdeed4",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#8D6E63",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": true,
+      "duration": "PT53H23M40S",
+      "clientName": "A-1 Sales team",
+      "note": "",
+      "costRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    }
+  }
+}
