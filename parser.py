@@ -1,6 +1,8 @@
 import os
 import json
 import re
+from datetime import datetime
+import pytz
 from openai import OpenAI
 from dotenv import load_dotenv
 
@@ -12,6 +14,7 @@ client = OpenAI(
 )
 
 MODEL = os.getenv("OPENROUTER_MODEL")
+TIMEZONE = "Asia/Kolkata"
 
 
 def safe_json_parse(content):
@@ -38,39 +41,59 @@ def fallback_parse(text):
         "project": "",
         "task": "",
         "duration_minutes": duration,
-        "description": text
+        "description": text,
+        "start_time": datetime.now(pytz.timezone(TIMEZONE)).isoformat()
     }
 
 
-def parse_message(text, project_list=None):
+def parse_message(text, project_list=None, previous_context=None):
+    now = datetime.now(pytz.timezone(TIMEZONE))
+    current_time_str = now.strftime("%Y-%m-%d %H:%M:%S")
+
     prompt = f"""
-Convert message into JSON.
+Convert message into JSON for a time tracking app.
+Current Time ({TIMEZONE}): {current_time_str}
 
 Message: "{text}"
 
 Available projects:
 {project_list}
 
+"""
+    if previous_context:
+        prompt += f"""
+Previous Context:
+{json.dumps(previous_context, indent=2)}
+
+The message is a CORRECTION or UPDATE to the previous context. Merge them sensibly.
+"""
+
+    prompt += """
 Rules:
 - Choose project ONLY from available list
 - If unsure, return empty ""
 - Extract task
-- Convert time into minutes
+- Convert duration into minutes (number)
+- Extract "start_time" in ISO 8601 format. 
+  If user says "started at 2pm", calculate the date based on current time.
+  If no time mentioned, use current time.
+- Description should be a short summary.
 
 Return ONLY JSON:
-{{
+{
   "project": "",
   "task": "",
   "duration_minutes": number,
-  "description": ""
-}}
+  "description": "",
+  "start_time": "ISO_TIMESTAMP"
+}
 """
 
     try:
         response = client.chat.completions.create(
             model=MODEL,
             messages=[
-                {"role": "system", "content": "You are a strict JSON generator."},
+                {"role": "system", "content": "You are a strict JSON generator for Clockify time entries."},
                 {"role": "user", "content": prompt}
             ],
             temperature=0.2
