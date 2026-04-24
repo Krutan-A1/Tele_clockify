@@ -112,10 +112,10 @@ Return ONLY JSON:
         )
 
         content = response.choices[0].message.content
-        print("🧠 RAW AI:", content)
+        print("🧠 RAW AI:", content, flush=True)
 
         return safe_json_parse(content)
 
     except Exception as e:
-        print("⚠️ AI failed, using fallback:", e)
+        print("⚠️ AI failed, using fallback:", e, flush=True)
         return fallback_parse(text)
