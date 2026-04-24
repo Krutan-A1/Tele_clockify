@@ -6,9 +6,17 @@ from datetime import datetime, timedelta, timezone
 CACHE_FILE = "clockify_cache.json"
 
 def get_env():
+    workspace_id = os.getenv("CLOCKIFY_WORKSPACE_ID")
+    api_key = os.getenv("CLOCKIFY_API_KEY")
+    
+    if not workspace_id:
+        print("❌ CRITICAL: CLOCKIFY_WORKSPACE_ID is missing from environment!")
+    if not api_key:
+        print("❌ CRITICAL: CLOCKIFY_API_KEY is missing from environment!")
+        
     return {
-        "API_KEY": os.getenv("CLOCKIFY_API_KEY"),
-        "WORKSPACE_ID": os.getenv("CLOCKIFY_WORKSPACE_ID"),
+        "API_KEY": api_key,
+        "WORKSPACE_ID": workspace_id,
         "BASE_URL": "https://api.clockify.me/api/v1"
     }
 
