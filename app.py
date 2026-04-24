@@ -227,8 +227,24 @@ def webhook():
                     send(chat_id, "❌ Cancelled")
                     return "OK", 200
 
-            # ... (rest of logic)
-            # ...
+            # Handle Editing State
+            prev_pending = pending_context.get(chat_id)
+            if prev_pending and prev_pending.get("state") == "editing":
+                previous_parsed = prev_pending.get("parsed")
+            else:
+                previous_parsed = None
+
+            projects = get_projects()
+            project_names = [p["name"] for p in projects]
+
+            parsed = parse_message(text, project_names, previous_context=previous_parsed)
+            print("🧠 Parsed:", parsed, flush=True)
+
+            project = match(parsed.get("project"), projects)
+
+            if not project:
+                send(chat_id, f"❌ Project not found.\nTry: {', '.join(project_names[:5])}")
+                return "OK", 200
             
             tasks = get_tasks(project["id"])
             task = match(parsed.get("task"), tasks)
