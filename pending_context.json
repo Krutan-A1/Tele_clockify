@@ -1,15 +1,15 @@
 {
   "1100131965": {
     "parsed": {
-      "project": "000929",
-      "task": "",
-      "duration_minutes": 0,
-      "description": "fgjsoidgoer rjgerigto lkerjierjtl",
-      "start_time": "2026-04-24T16:25:15Z"
+      "project": "2WO-000929",
+      "task": "Testing",
+      "duration_minutes": 60,
+      "description": "1 hour Testing on liminal-k system",
+      "start_time": "2026-04-24T17:22:44"
     },
     "project": {
-      "id": "69c23ab26b305c70f99804e8",
-      "name": "000929",
+      "id": "69c23c24b72b80e37c2c083e",
+      "name": "2WO-000929",
       "hourlyRate": {
         "amount": 0,
         "currency": "INR"
@@ -22,7 +22,7 @@
           "userId": "68c40ee5d4220b3c5cd4a71a",
           "hourlyRate": null,
           "costRate": null,
-          "targetId": "69c23ab26b305c70f99804e8",
+          "targetId": "69c23c24b72b80e37c2c083e",
           "membershipType": "PROJECT",
           "membershipStatus": "ACTIVE"
         }
@@ -50,8 +50,8 @@
       "public": true
     },
     "task": {
-      "id": "69eb4c1703616156f9f9a25d",
-      "name": "General"
+      "id": "69e90f51820d6a7ecf7d0ab1",
+      "name": "testing"
     },
     "state": "pending"
   }

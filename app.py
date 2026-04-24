@@ -185,17 +185,18 @@ def webhook():
             
             print(f"📩 Message from {chat_id}: {text}", flush=True)
 
-            # Handle Commands
-            if text.startswith("/"):
-                if text == "/sync":
+            # Handle Commands (Case-insensitive)
+            cmd = text.lower().strip()
+            if cmd.startswith("/"):
+                if cmd == "/sync":
                     clear_cache()
                     get_projects(force_refresh=True)
                     send(chat_id, "✅ Clockify cache cleared and projects synced.")
                     return "OK", 200
-                elif text == "/start":
+                elif cmd == "/start":
                     send(chat_id, "Welcome! Just tell me what you're working on, e.g., '2 hours on Project X task Y description Z'")
                     return "OK", 200
-                elif text == "/confirm":
+                elif cmd == "/confirm":
                     # Manually trigger confirm logic
                     print("⌨️ Manual /confirm command received", flush=True)
                     pending = pending_context.get(chat_id)
@@ -219,40 +220,38 @@ def webhook():
                         else:
                             send(chat_id, f"❌ Failed:\n{resp}")
                         return "OK", 200
-                elif text == "/cancel":
+                elif cmd == "/cancel":
                     print("⌨️ Manual /cancel command received", flush=True)
                     pending_context.pop(chat_id, None)
                     save_pending(pending_context)
                     send(chat_id, "❌ Cancelled")
                     return "OK", 200
 
-            # Handle Editing State
-            prev_pending = pending_context.get(chat_id)
-            if prev_pending and prev_pending.get("state") == "editing":
-                previous_parsed = prev_pending.get("parsed")
-            else:
-                previous_parsed = None
-
-            projects = get_projects()
-            project_names = [p["name"] for p in projects]
-
-            parsed = parse_message(text, project_names, previous_context=previous_parsed)
-            print("🧠 Parsed:", parsed, flush=True)
-
-            project = match(parsed.get("project"), projects)
-
-            if not project:
-                send(chat_id, f"❌ Project not found.\nTry: {', '.join(project_names[:5])}")
-                return "OK", 200
-
+            # ... (rest of logic)
+            # ...
+            
             tasks = get_tasks(project["id"])
             task = match(parsed.get("task"), tasks)
 
             if not task:
+                task_name = parsed.get("task") or "General"
                 # auto create task
-                new_task = create_task(project["id"], parsed.get("task") or "General")
-                task_id = new_task["id"]
-                task_name = new_task["name"]
+                new_task_resp = create_task(project["id"], task_name)
+                
+                # If task already exists, find it in the list
+                if "id" not in new_task_resp:
+                    tasks = get_tasks(project["id"], force_refresh=True)
+                    task = match(task_name, tasks)
+                    if task:
+                        task_id = task["id"]
+                        task_name = task["name"]
+                    else:
+                        # Fallback
+                        task_id = None
+                        task_name = "General (Created)"
+                else:
+                    task_id = new_task_resp["id"]
+                    task_name = new_task_resp["name"]
             else:
                 task_id = task["id"]
                 task_name = task["name"]
