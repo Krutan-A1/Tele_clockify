@@ -16,21 +16,25 @@ app = Flask(__name__)
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN").strip()
 TELEGRAM_API_URL = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}"
 
-# persistence file
-PENDING_FILE = "pending_context.json"
+# persistence file - Using /tmp ensures it works on Render's ephemeral filesystem
+PENDING_FILE = "/tmp/pending_context.json"
 
 def load_pending():
     if os.path.exists(PENDING_FILE):
         try:
             with open(PENDING_FILE, "r") as f:
                 return json.load(f)
-        except:
+        except Exception as e:
+            print(f"⚠️ Load error: {e}")
             return {}
     return {}
 
 def save_pending(context):
-    with open(PENDING_FILE, "w") as f:
-        json.dump(context, f, indent=2)
+    try:
+        with open(PENDING_FILE, "w") as f:
+            json.dump(context, f, indent=2)
+    except Exception as e:
+        print(f"⚠️ Save error: {e}")
 
 
 # ---------------------------
@@ -95,127 +99,139 @@ def home():
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
-    data = request.get_json(silent=True) or {}
-    print("🔥 Incoming:", json.dumps(data, indent=2))
+    try:
+        data = request.get_json(silent=True) or {}
+        print("🔥 Incoming:", json.dumps(data, indent=2))
 
-    pending_context = load_pending()
+        pending_context = load_pending()
 
-    # MESSAGE
-    if "message" in data and "text" in data["message"]:
-        chat_id = str(data["message"]["chat"]["id"])
-        text = data["message"]["text"]
+        # MESSAGE
+        if "message" in data and "text" in data["message"]:
+            chat_id = str(data["message"]["chat"]["id"])
+            text = data["message"]["text"]
+            
+            print(f"📩 Message from {chat_id}: {text}")
 
-        # Handle Commands
-        if text.startswith("/"):
-            if text == "/sync":
-                clear_cache()
-                get_projects(force_refresh=True)
-                send(chat_id, "✅ Clockify cache cleared and projects synced.")
+            # Handle Commands
+            if text.startswith("/"):
+                if text == "/sync":
+                    clear_cache()
+                    get_projects(force_refresh=True)
+                    send(chat_id, "✅ Clockify cache cleared and projects synced.")
+                    return "OK", 200
+                elif text == "/start":
+                    send(chat_id, "Welcome! Just tell me what you're working on, e.g., '2 hours on Project X task Y description Z'")
+                    return "OK", 200
+
+            # Handle Editing State
+            prev_pending = pending_context.get(chat_id)
+            if prev_pending and prev_pending.get("state") == "editing":
+                previous_parsed = prev_pending.get("parsed")
+            else:
+                previous_parsed = None
+
+            projects = get_projects()
+            project_names = [p["name"] for p in projects]
+
+            parsed = parse_message(text, project_names, previous_context=previous_parsed)
+            print("🧠 Parsed:", parsed)
+
+            project = match(parsed.get("project"), projects)
+
+            if not project:
+                send(chat_id, f"❌ Project not found.\nTry: {', '.join(project_names[:5])}")
                 return "OK", 200
-            elif text == "/start":
-                send(chat_id, "Welcome! Just tell me what you're working on, e.g., '2 hours on Project X task Y description Z'")
-                return "OK", 200
 
-        # Handle Editing State
-        prev_pending = pending_context.get(chat_id)
-        if prev_pending and prev_pending.get("state") == "editing":
-            previous_parsed = prev_pending.get("parsed")
-        else:
-            previous_parsed = None
+            tasks = get_tasks(project["id"])
+            task = match(parsed.get("task"), tasks)
 
-        projects = get_projects()
-        project_names = [p["name"] for p in projects]
+            if not task:
+                # auto create task
+                new_task = create_task(project["id"], parsed.get("task") or "General")
+                task_id = new_task["id"]
+                task_name = new_task["name"]
+            else:
+                task_id = task["id"]
+                task_name = task["name"]
 
-        parsed = parse_message(text, project_names, previous_context=previous_parsed)
-        print("🧠 Parsed:", parsed)
-
-        project = match(parsed.get("project"), projects)
-
-        if not project:
-            send(chat_id, f"❌ Project not found.\nTry: {', '.join(project_names[:5])}")
-            return "OK", 200
-
-        tasks = get_tasks(project["id"])
-        task = match(parsed.get("task"), tasks)
-
-        if not task:
-            # auto create task
-            new_task = create_task(project["id"], parsed.get("task") or "General")
-            task_id = new_task["id"]
-            task_name = new_task["name"]
-        else:
-            task_id = task["id"]
-            task_name = task["name"]
-
-        pending_context[chat_id] = {
-            "parsed": parsed,
-            "project": project,
-            "task": {"id": task_id, "name": task_name},
-            "state": "pending"
-        }
-        save_pending(pending_context)
-
-        # Format start time for display
-        st = parsed.get("start_time", "Now")
-        if "T" in st:
-            st = st.split("T")[1][:5] # HH:MM
-
-        msg = (
-            f"📂 Project: {project['name']}\n"
-            f"📝 Task: {task_name}\n"
-            f"⏱ Duration: {parsed['duration_minutes']} mins\n"
-            f"🕒 Start: {st}\n"
-            f"📖 Desc: {parsed['description']}\n\nConfirm?"
-        )
-
-        send(chat_id, msg, keyboard())
-        return "OK", 200
-
-    # BUTTON
-    if "callback_query" in data:
-        cb = data["callback_query"]
-        chat_id = str(cb["message"]["chat"]["id"])
-        action = cb["data"]
-
-        answer(cb["id"])
-
-        pending = pending_context.get(chat_id)
-
-        if not pending:
-            send(chat_id, "❌ No pending task")
-            return "OK", 200
-
-        if action == "cancel":
-            pending_context.pop(chat_id, None)
-            save_pending(pending_context)
-            send(chat_id, "❌ Cancelled")
-            return "OK", 200
-
-        if action == "edit":
-            pending["state"] = "editing"
-            save_pending(pending_context)
-            send(chat_id, "✏️ What would you like to change? (Just tell me the update)")
-            return "OK", 200
-
-        if action == "confirm":
-            payload = {
-                "description": pending["parsed"]["description"],
-                "duration_minutes": pending["parsed"]["duration_minutes"],
-                "projectId": pending["project"]["id"],
-                "taskId": pending["task"]["id"],
-                "start_time": pending["parsed"].get("start_time")
+            pending_context[chat_id] = {
+                "parsed": parsed,
+                "project": project,
+                "task": {"id": task_id, "name": task_name},
+                "state": "pending"
             }
+            save_pending(pending_context)
 
-            status, resp = create_time_entry(payload)
+            # Format start time for display
+            st = parsed.get("start_time", "Now")
+            if "T" in st:
+                st = st.split("T")[1][:5] # HH:MM
 
-            if 200 <= status < 300:
-                send(chat_id, "✅ Entry created")
+            msg = (
+                f"📂 Project: {project['name']}\n"
+                f"📝 Task: {task_name}\n"
+                f"⏱ Duration: {parsed['duration_minutes']} mins\n"
+                f"🕒 Start: {st}\n"
+                f"📖 Desc: {parsed['description']}\n\nConfirm?"
+            )
+
+            send(chat_id, msg, keyboard())
+            return "OK", 200
+
+        # BUTTON
+        if "callback_query" in data:
+            cb = data["callback_query"]
+            chat_id = str(cb["message"]["chat"]["id"])
+            action = cb["data"]
+            
+            print(f"🔘 Button Clicked by {chat_id}: {action}")
+
+            answer(cb["id"])
+
+            pending = pending_context.get(chat_id)
+
+            if not pending:
+                print(f"⚠️ No pending task found for chat_id: {chat_id}")
+                send(chat_id, "❌ No pending task")
+                return "OK", 200
+
+            if action == "cancel":
                 pending_context.pop(chat_id, None)
                 save_pending(pending_context)
-            else:
-                send(chat_id, f"❌ Failed:\n{resp}")
+                send(chat_id, "❌ Cancelled")
+                return "OK", 200
 
-        return "OK", 200
+            if action == "edit":
+                pending["state"] = "editing"
+                save_pending(pending_context)
+                send(chat_id, "✏️ What would you like to change? (Just tell me the update)")
+                return "OK", 200
+
+            if action == "confirm":
+                payload = {
+                    "description": pending["parsed"]["description"],
+                    "duration_minutes": pending["parsed"]["duration_minutes"],
+                    "projectId": pending["project"]["id"],
+                    "taskId": pending["task"]["id"],
+                    "start_time": pending["parsed"].get("start_time")
+                }
+
+                status, resp = create_time_entry(payload)
+
+                if 200 <= status < 300:
+                    send(chat_id, "✅ Entry created")
+                    pending_context.pop(chat_id, None)
+                    save_pending(pending_context)
+                else:
+                    send(chat_id, f"❌ Failed:\n{resp}")
+
+            return "OK", 200
+
+    except Exception as e:
+        import traceback
+        print(f"🚑 WEBHOOK ERROR: {e}")
+        traceback.print_exc()
+        return "Internal Server Error", 500
 
     return "OK", 200
 
