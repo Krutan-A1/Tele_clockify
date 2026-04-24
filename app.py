@@ -89,7 +89,7 @@ def match(name, items):
         return mapping[name]
 
     for k, v in mapping.items():
-        if name in k:
+        if name in k or k in name: # Bidirectional partial match
             return v
 
     close = get_close_matches(name, mapping.keys(), n=1, cutoff=0.6)
@@ -250,8 +250,17 @@ def webhook():
 
             project = match(parsed.get("project"), projects)
 
+            # Store the state ANYWAY so the user can click Edit if it failed
+            pending_context[chat_id] = {
+                "parsed": parsed,
+                "project": project, # Might be None
+                "task": None,
+                "state": "pending"
+            }
+            save_pending(pending_context)
+
             if not project:
-                send(chat_id, f"❌ Project not found.\nTry: {', '.join(project_names[:5])}")
+                send(chat_id, f"❌ Project not found: '{parsed.get('project')}'\nTry: {', '.join(project_names[:5])}", keyboard())
                 return "OK", 200
             
             tasks = get_tasks(project["id"])
