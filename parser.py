@@ -84,7 +84,13 @@ Rules:
 - Extract "start_time" in ISO 8601 format. 
   If user says "started at 2pm", calculate the date based on current time.
   If no time mentioned, use current time.
-- Description should be a short summary.
+  - description: a short summary of the work.
+  - start_time: ISO 8601 (Asia/Kolkata).
+
+If "previous_context" is provided:
+- This is an UPDATE to a previous entry. 
+- Merge the new info into the old info. 
+- Example: If old was "1 hour on Project A" and new is "actually 2 hours", return 120 mins for project A.
 
 Return ONLY the raw JSON object. Do NOT include any conversational text, explanations, or markdown formatting blocks.
 

@@ -150,7 +150,15 @@ def webhook():
             if action == "edit":
                 pending["state"] = "editing"
                 save_pending(pending_context)
-                send(chat_id, "✏️ What would you like to change? (Just tell me the update, e.g. 'change duration to 45 mins')")
+                msg = (
+                    f"✏️ **Editing Current Entry**\n"
+                    f"Last input: `{pending['parsed'].get('description', '')}`\n\n"
+                    "What would you like to change? You can say things like:\n"
+                    "• 'change duration to 45 mins'\n"
+                    "• 'change task to Testing'\n"
+                    "• Or just type the whole thing again."
+                )
+                send(chat_id, msg)
                 return "OK", 200
 
             if action == "confirm":
