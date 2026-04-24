@@ -17,8 +17,21 @@ app = Flask(__name__)
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN").strip()
 TELEGRAM_API_URL = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}"
 
-pending_context = {}
-lock = threading.Lock()
+# persistence file
+PENDING_FILE = "pending_context.json"
+
+def load_pending():
+    if os.path.exists(PENDING_FILE):
+        try:
+            with open(PENDING_FILE, "r") as f:
+                return json.load(f)
+        except:
+            return {}
+    return {}
+
+def save_pending(context):
+    with open(PENDING_FILE, "w") as f:
+        json.dump(context, f, indent=2)
 
 
 # ---------------------------
@@ -86,6 +99,8 @@ def webhook():
     data = request.get_json(silent=True) or {}
     print("🔥 Incoming:", json.dumps(data, indent=2))
 
+    pending_context = load_pending()
+
     # MESSAGE
     if "message" in data and "text" in data["message"]:
         chat_id = str(data["message"]["chat"]["id"])
@@ -139,6 +154,7 @@ def webhook():
             "task": {"id": task_id, "name": task_name},
             "state": "pending"
         }
+        save_pending(pending_context)
 
         # Format start time for display
         st = parsed.get("start_time", "Now")
@@ -172,11 +188,13 @@ def webhook():
 
         if action == "cancel":
             pending_context.pop(chat_id, None)
+            save_pending(pending_context)
             send(chat_id, "❌ Cancelled")
             return "OK", 200
 
         if action == "edit":
             pending["state"] = "editing"
+            save_pending(pending_context)
             send(chat_id, "✏️ What would you like to change? (Just tell me the update)")
             return "OK", 200
 
@@ -194,6 +212,7 @@ def webhook():
             if 200 <= status < 300:
                 send(chat_id, "✅ Entry created")
                 pending_context.pop(chat_id, None)
+                save_pending(pending_context)
             else:
                 send(chat_id, f"❌ Failed:\n{resp}")
 
