@@ -6,11 +6,10 @@ from difflib import get_close_matches
 import requests
 from flask import Flask, request
 from dotenv import load_dotenv
+load_dotenv()
 
 from parser import parse_message
 from clockify import get_projects, get_tasks, create_task, create_time_entry, clear_cache
-
-load_dotenv()
 
 app = Flask(__name__)
 

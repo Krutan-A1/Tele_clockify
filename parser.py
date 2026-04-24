@@ -12,18 +12,18 @@ load_dotenv()
 MODEL = os.getenv("OPENROUTER_MODEL")
 TIMEZONE = "Asia/Kolkata"
 
-# Safety check for API key
-api_key = os.getenv("OPENROUTER_API_KEY")
-if not api_key:
-    # If missing, we'll try to use a placeholder to prevent crash at boot
-    # but actual AI calls will fail. This allows the server to at least start.
-    print("⚠️ WARNING: OPENROUTER_API_KEY is not set!")
-    api_key = "MISSING_KEY"
+def get_client():
+    api_key = os.getenv("OPENROUTER_API_KEY")
+    if not api_key:
+        print("⚠️ WARNING: OPENROUTER_API_KEY is not set!")
+        api_key = "MISSING_KEY"
+    
+    return OpenAI(
+        api_key=api_key,
+        base_url=os.getenv("OPENROUTER_BASE_URL") or "https://openrouter.ai/api/v1"
+    )
 
-client = OpenAI(
-    api_key=api_key,
-    base_url=os.getenv("OPENROUTER_BASE_URL") or "https://openrouter.ai/api/v1"
-)
+TIMEZONE = "Asia/Kolkata"
 
 
 def safe_json_parse(content):
@@ -99,8 +99,11 @@ Return ONLY JSON:
 """
 
     try:
+        client = get_client()
+        model = os.getenv("OPENROUTER_MODEL") or "google/gemini-2.0-flash-001"
+        
         response = client.chat.completions.create(
-            model=MODEL,
+            model=model,
             messages=[
                 {"role": "system", "content": "You are a strict JSON generator for Clockify time entries."},
                 {"role": "user", "content": prompt}
