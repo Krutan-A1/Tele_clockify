@@ -1,0 +1,2209 @@
+{
+  "projects": [
+    {
+      "id": "69c23ab26b305c70f99804e8",
+      "name": "000929",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "69c23ab26b305c70f99804e8",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#F44336",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT1H",
+      "clientName": "",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "6909d3ffe42a8f77e9e6b69e",
+      "name": "2WO-000538",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "6800c21bda507d1b66a90a11",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "6909d3ffe42a8f77e9e6b69e",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#FF5722",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT0S",
+      "clientName": "ESS Production Sanjan",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "6909d3f60acd8e3cd7bdf327",
+      "name": "2WO-000543",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "6800c21bda507d1b66a90a11",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "6909d3f60acd8e3cd7bdf327",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#E91E63",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT3H9M",
+      "clientName": "ESS Production Sanjan",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "6909d3cde42a8f77e9e6ad96",
+      "name": "2WO-000576",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "6800c21bda507d1b66a90a11",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "6909d3cde42a8f77e9e6ad96",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#1976D2",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT1H20M",
+      "clientName": "ESS Production Sanjan",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "6909d41edd808111f6d09905",
+      "name": "2WO-000589",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "6800c21bda507d1b66a90a11",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "6909d41edd808111f6d09905",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#FF5722",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT7H7M",
+      "clientName": "ESS Production Sanjan",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "6909d430dd808111f6d09d2c",
+      "name": "2WO-000598",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "6800c21bda507d1b66a90a11",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "6909d430dd808111f6d09d2c",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#689F38",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT34H38M",
+      "clientName": "ESS Production Sanjan",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "6909d429dd808111f6d09b7f",
+      "name": "2WO-000607",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "6800c21bda507d1b66a90a11",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "6909d429dd808111f6d09b7f",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#E91E63",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT0S",
+      "clientName": "ESS Production Sanjan",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "6968abafa912141b9b7c89ab",
+      "name": "2WO-000619",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "6800c21bda507d1b66a90a11",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "6968abafa912141b9b7c89ab",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#689F38",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT30H13M47S",
+      "clientName": "ESS Production Sanjan",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "69143f5f39caff1a3749be96",
+      "name": "2WO-000623",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "6800c21bda507d1b66a90a11",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "69143f5f39caff1a3749be96",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#8D6E63",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT7H13M",
+      "clientName": "ESS Production Sanjan",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "69143f6739caff1a3749c022",
+      "name": "2WO-000626",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "6800c21bda507d1b66a90a11",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "69143f6739caff1a3749c022",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#5C6BC0",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT14H40M",
+      "clientName": "ESS Production Sanjan",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "6968ab602ca2b3226f25dadc",
+      "name": "2WO-000643",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "6800c21bda507d1b66a90a11",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "6968ab602ca2b3226f25dadc",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#039BE5",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT0S",
+      "clientName": "ESS Production Sanjan",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "69242827296896379f4655a9",
+      "name": "2WO-000651",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "69242827296896379f4655a9",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#F44336",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT1H",
+      "clientName": "",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "6968ab6dbe012461ab44876c",
+      "name": "2WO-000651",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "6800c21bda507d1b66a90a11",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "6968ab6dbe012461ab44876c",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#1976D2",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT0S",
+      "clientName": "ESS Production Sanjan",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "6924281969c4de44cbd7a96a",
+      "name": "2WO-000655",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "6924281969c4de44cbd7a96a",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#F44336",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT10H54M",
+      "clientName": "",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "6968ab782ca2b3226f25de07",
+      "name": "2WO-000660",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "6800c21bda507d1b66a90a11",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "6968ab782ca2b3226f25de07",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#8D6E63",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT122H3M42S",
+      "clientName": "ESS Production Sanjan",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "6968ab93593f97766d82951b",
+      "name": "2WO-000712",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "6800c21bda507d1b66a90a11",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "6968ab93593f97766d82951b",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#5C6BC0",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT0S",
+      "clientName": "ESS Production Sanjan",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "6968ab80ce20316b2138a094",
+      "name": "2WO-000717",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "6800c21bda507d1b66a90a11",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "6968ab80ce20316b2138a094",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#009688",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT0S",
+      "clientName": "ESS Production Sanjan",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "6968ab8a7102073c57718ba8",
+      "name": "2WO-000718",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "6800c21bda507d1b66a90a11",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "6968ab8a7102073c57718ba8",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#E91E63",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT0S",
+      "clientName": "ESS Production Sanjan",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "6968abba7102073c57719224",
+      "name": "2WO-000726",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "6800c21bda507d1b66a90a11",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "6968abba7102073c57719224",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#039BE5",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT2H49M",
+      "clientName": "ESS Production Sanjan",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "6968aba89101817c76aa88a2",
+      "name": "2WO-000751",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "6800c21bda507d1b66a90a11",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "6968aba89101817c76aa88a2",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#009688",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT2H49M",
+      "clientName": "ESS Production Sanjan",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "6968ab9a557749519aaf667a",
+      "name": "2WO-000758",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "6800c21bda507d1b66a90a11",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "6968ab9a557749519aaf667a",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#FF5722",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT22H20M47S",
+      "clientName": "ESS Production Sanjan",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "6968aba1557749519aaf6725",
+      "name": "2WO-000767",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "6800c21bda507d1b66a90a11",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "6968aba1557749519aaf6725",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#8D6E63",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT49M",
+      "clientName": "ESS Production Sanjan",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "694e3857298b8d519bb9f2df",
+      "name": "2WO-000767/2WO-000751/2WO-000619",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "6800c21bda507d1b66a90a11",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "694e3857298b8d519bb9f2df",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#1976D2",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT13H11M",
+      "clientName": "ESS Production Sanjan",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "6986d6ba76f533964939800c",
+      "name": "2WO-000826",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "6800c21bda507d1b66a90a11",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "6986d6ba76f533964939800c",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#1976D2",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT28M44S",
+      "clientName": "ESS Production Sanjan",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "6968abc68276625cdb7c3696",
+      "name": "2WO-000830",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "6800c21bda507d1b66a90a11",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "6968abc68276625cdb7c3696",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#8D6E63",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT6H10M",
+      "clientName": "ESS Production Sanjan",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "6968abe5ce20316b2138ad24",
+      "name": "2WO-000840",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "6800c21bda507d1b66a90a11",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "6968abe5ce20316b2138ad24",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#009688",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT1H45M",
+      "clientName": "ESS Production Sanjan",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "6986d6a42401ad93ad909737",
+      "name": "2WO-000866",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "6800c21bda507d1b66a90a11",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "6986d6a42401ad93ad909737",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#E91E63",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT13H44M",
+      "clientName": "ESS Production Sanjan",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "6982da313d384d3eac0b3e08",
+      "name": "2WO-000879",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "6982da313d384d3eac0b3e08",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#F44336",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT1H",
+      "clientName": "",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "6986d6c02b4755a92910dba2",
+      "name": "2WO-000882",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "6800c21bda507d1b66a90a11",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "6986d6c02b4755a92910dba2",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#689F38",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT5H44M",
+      "clientName": "ESS Production Sanjan",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "6986d6ab601639b61fb02bd7",
+      "name": "2WO-000893",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "6800c21bda507d1b66a90a11",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "6986d6ab601639b61fb02bd7",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#8D6E63",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT34M",
+      "clientName": "ESS Production Sanjan",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "6986d6b276f5339649397fd0",
+      "name": "2WO-000894",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "6800c21bda507d1b66a90a11",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "6986d6b276f5339649397fd0",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#1976D2",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT0S",
+      "clientName": "ESS Production Sanjan",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "69ae561e65fe278828ecc2d8",
+      "name": "2WO-000914",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "6800c21bda507d1b66a90a11",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "69ae561e65fe278828ecc2d8",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#FF5722",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT8H52M1S",
+      "clientName": "ESS Production Sanjan",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "69c23c24b72b80e37c2c083e",
+      "name": "2WO-000929",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "69c23c24b72b80e37c2c083e",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#F44336",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT1H",
+      "clientName": "",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "69ae5634d897bbc49b607d1f",
+      "name": "2WO-000958",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "6800c21bda507d1b66a90a11",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "69ae5634d897bbc49b607d1f",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#8D6E63",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT42H9M58S",
+      "clientName": "ESS Production Sanjan",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "69d8d5377617f51a954d703b",
+      "name": "2WO-000964",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "6800c21bda507d1b66a90a11",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "69d8d5377617f51a954d703b",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#AB47BC",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT17H22M",
+      "clientName": "ESS Production Sanjan",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "64185ef88b95984b3df23035",
+      "name": "A1 eye",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "640f0051a882ba7841f1f3a8",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "63f34ec75f9c6f02feb54778",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "64185ef88b95984b3df23035",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#009688",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT227H31M34S",
+      "clientName": "A-1 Fence Products",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "640f0058ca515139ef24e68e",
+      "name": "Administrative",
+      "hourlyRate": {
+        "amount": 22222,
+        "currency": "INR"
+      },
+      "clientId": "640f0051a882ba7841f1f3a8",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": false,
+      "memberships": [
+        {
+          "userId": "63f34ec75f9c6f02feb54778",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "640f0058ca515139ef24e68e",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#F44336",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT6326H55M9S",
+      "clientName": "A-1 Fence Products",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "68b1266a28824776eb8a882e",
+      "name": "Automation",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "640f0051a882ba7841f1f3a8",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "671f3b1032d349511f0fdc6d",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "68b1266a28824776eb8a882e",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#039BE5",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT165H23M8S",
+      "clientName": "A-1 Fence Products",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "687b2175da98dc7cc1811cde",
+      "name": "boom barrier LED light NPD project",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "6800c21bda507d1b66a90a11",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "671f3b1032d349511f0fdc6d",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "687b2175da98dc7cc1811cde",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#009688",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT7H24M",
+      "clientName": "ESS Production Sanjan",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "671efbd8bd91bc5e5dfdeed4",
+      "name": "BSF 15 meter WeldSense demo at West Bengal",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "65782aa511ab57349ff35ad7",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "63f34ec75f9c6f02feb54778",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "671efbd8bd91bc5e5dfdeed4",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#8D6E63",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": true,
+      "duration": "PT53H23M40S",
+      "clientName": "A-1 Sales team",
+      "note": "",
+      "costRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "64f5ae6160256d4cce041b21",
+      "name": "CIHS",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "640f0051a882ba7841f1f3a8",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "63f34ec75f9c6f02feb54778",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "64f5ae6160256d4cce041b21",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#FFC107",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT33H15M48S",
+      "clientName": "A-1 Fence Products",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "64bfd5e289afca11f0896ec9",
+      "name": "Coldwire Kochi_LK2",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "64bfd5de9479511b722b4599",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "63f34ec75f9c6f02feb54778",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "64bfd5e289afca11f0896ec9",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#8BC34A",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": true,
+      "duration": "PT62H23M26S",
+      "clientName": "Service Department",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "68e6138a692799073afb9bfd",
+      "name": "Dammam port Liminal-K",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "6800c21bda507d1b66a90a11",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "63f34ec75f9c6f02feb54778",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "68e6138a692799073afb9bfd",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#7986CB",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT1084H13M8S",
+      "clientName": "ESS Production Sanjan",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "674b7ad1bc22677fe38d5bbb",
+      "name": "Drone integrated with Vigil",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "640f0051a882ba7841f1f3a8",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "63f34ec75f9c6f02feb54778",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "674b7ad1bc22677fe38d5bbb",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#d4f438",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT135H52M51S",
+      "clientName": "A-1 Fence Products",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "686f5a58ccb8b351620f04dc",
+      "name": "Electric Fence Cost Optimization",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "640f0051a882ba7841f1f3a8",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "63f34ec75f9c6f02feb54778",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "686f5a58ccb8b351620f04dc",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#7986CB",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT2H5M",
+      "clientName": "A-1 Fence Products",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "686e38b869e85752e233b795",
+      "name": "ESS Demonstrations and Maintainanace",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "640f0051a882ba7841f1f3a8",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "63f34ec75f9c6f02feb54778",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "686e38b869e85752e233b795",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#f44336",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT242H23M38S",
+      "clientName": "A-1 Fence Products",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "6986e405298c54d459497d50",
+      "name": "Factory Visit/Customer Visit",
+      "hourlyRate": {
+        "amount": 90000,
+        "currency": "INR"
+      },
+      "clientId": "640f0051a882ba7841f1f3a8",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "68c40ee5d4220b3c5cd4a71a",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "6986e405298c54d459497d50",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#dd4c7d",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT43M14S",
+      "clientName": "A-1 Fence Products",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "6875f0edcabbf7602edc4980",
+      "name": "Fense sense Wired",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "640f0051a882ba7841f1f3a8",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "629cfbff1566e861c6f3fb9e",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "6875f0edcabbf7602edc4980",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#039BE5",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT47H30M",
+      "clientName": "A-1 Fence Products",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "64033dedae522e37955fb7c3",
+      "name": "FenSense",
+      "hourlyRate": {
+        "amount": 22222,
+        "currency": "INR"
+      },
+      "clientId": "640f0051a882ba7841f1f3a8",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "63f34ec75f9c6f02feb54778",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "64033dedae522e37955fb7c3",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#FFC107",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": false,
+      "duration": "PT6287H38M52S",
+      "clientName": "A-1 Fence Products",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    },
+    {
+      "id": "64a68e143ac4067fabd00aa7",
+      "name": "FOPIDS",
+      "hourlyRate": {
+        "amount": 0,
+        "currency": "INR"
+      },
+      "clientId": "640f0051a882ba7841f1f3a8",
+      "workspaceId": "63f34ec75f9c6f02feb54779",
+      "billable": true,
+      "memberships": [
+        {
+          "userId": "63f34ec75f9c6f02feb54778",
+          "hourlyRate": null,
+          "costRate": null,
+          "targetId": "64a68e143ac4067fabd00aa7",
+          "membershipType": "PROJECT",
+          "membershipStatus": "ACTIVE"
+        }
+      ],
+      "color": "#FFC107",
+      "estimate": {
+        "estimate": "PT0S",
+        "type": "AUTO"
+      },
+      "archived": true,
+      "duration": "PT30H43M30S",
+      "clientName": "A-1 Fence Products",
+      "note": "",
+      "costRate": null,
+      "timeEstimate": {
+        "estimate": "PT0S",
+        "type": "AUTO",
+        "resetOption": null,
+        "active": false,
+        "includeNonBillable": true
+      },
+      "budgetEstimate": null,
+      "estimateReset": null,
+      "template": false,
+      "public": true
+    }
+  ],
+  "tasks_69c23c24b72b80e37c2c083e": [
+    {
+      "id": "69e90f81a50edf6295f3772f",
+      "name": "liminal-k",
+      "projectId": "69c23c24b72b80e37c2c083e",
+      "assigneeIds": [],
+      "assigneeId": null,
+      "userGroupIds": [],
+      "estimate": "PT0S",
+      "status": "ACTIVE",
+      "budgetEstimate": 0,
+      "duration": "PT0S",
+      "billable": true,
+      "hourlyRate": null,
+      "costRate": null
+    },
+    {
+      "id": "69e90f51820d6a7ecf7d0ab1",
+      "name": "testing",
+      "projectId": "69c23c24b72b80e37c2c083e",
+      "assigneeIds": [],
+      "assigneeId": null,
+      "userGroupIds": [],
+      "estimate": "PT0S",
+      "status": "ACTIVE",
+      "budgetEstimate": 0,
+      "duration": null,
+      "billable": true,
+      "hourlyRate": null,
+      "costRate": null
+    },
+    {
+      "id": "69eb41b99e6197e396e41006",
+      "name": "General",
+      "projectId": "69c23c24b72b80e37c2c083e",
+      "assigneeIds": [],
+      "assigneeId": null,
+      "userGroupIds": [],
+      "estimate": "PT0S",
+      "status": "ACTIVE",
+      "budgetEstimate": null,
+      "duration": "PT0S",
+      "billable": true,
+      "hourlyRate": null,
+      "costRate": null
+    },
+    {
+      "id": "69eb41ef9e6197e396e413fd",
+      "name": "Testing on liminal-k system",
+      "projectId": "69c23c24b72b80e37c2c083e",
+      "assigneeIds": [],
+      "assigneeId": null,
+      "userGroupIds": [],
+      "estimate": "PT0S",
+      "status": "ACTIVE",
+      "budgetEstimate": null,
+      "duration": "PT0S",
+      "billable": true,
+      "hourlyRate": null,
+      "costRate": null
+    },
+    {
+      "message": "Task with name 'General' already exists",
+      "code": 501
+    },
+    {
+      "message": "Task with name 'General' already exists",
+      "code": 501
+    }
+  ],
+  "tasks_69c23ab26b305c70f99804e8": [
+    {
+      "id": "69eb4b659e6197e396e4a719",
+      "name": "Testing",
+      "projectId": "69c23ab26b305c70f99804e8",
+      "assigneeIds": [],
+      "assigneeId": null,
+      "userGroupIds": [],
+      "estimate": "PT0S",
+      "status": "ACTIVE",
+      "budgetEstimate": null,
+      "duration": "PT0S",
+      "billable": true,
+      "hourlyRate": null,
+      "costRate": null
+    },
+    {
+      "id": "69eb4c1703616156f9f9a25d",
+      "name": "General",
+      "projectId": "69c23ab26b305c70f99804e8",
+      "assigneeIds": [],
+      "assigneeId": null,
+      "userGroupIds": [],
+      "estimate": "PT0S",
+      "status": "ACTIVE",
+      "budgetEstimate": null,
+      "duration": "PT0S",
+      "billable": true,
+      "hourlyRate": null,
+      "costRate": null
+    }
+  ]
+}

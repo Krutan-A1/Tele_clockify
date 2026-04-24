@@ -1,44 +1,42 @@
 {
   "1100131965": {
     "parsed": {
-      "project": "weldsense",
-      "task": "testing",
-      "duration_minutes": 60,
-      "description": "did 1 hour testing on weldsense project"
+      "project": "000929",
+      "task": "",
+      "duration_minutes": 0,
+      "description": "fgjsoidgoer rjgerigto lkerjierjtl",
+      "start_time": "2026-04-24T16:25:15Z"
     },
     "project": {
-      "id": "671efbd8bd91bc5e5dfdeed4",
-      "name": "BSF 15 meter WeldSense demo at West Bengal",
+      "id": "69c23ab26b305c70f99804e8",
+      "name": "000929",
       "hourlyRate": {
         "amount": 0,
         "currency": "INR"
       },
-      "clientId": "65782aa511ab57349ff35ad7",
+      "clientId": "",
       "workspaceId": "63f34ec75f9c6f02feb54779",
       "billable": true,
       "memberships": [
         {
-          "userId": "63f34ec75f9c6f02feb54778",
+          "userId": "68c40ee5d4220b3c5cd4a71a",
           "hourlyRate": null,
           "costRate": null,
-          "targetId": "671efbd8bd91bc5e5dfdeed4",
+          "targetId": "69c23ab26b305c70f99804e8",
           "membershipType": "PROJECT",
           "membershipStatus": "ACTIVE"
         }
       ],
-      "color": "#8D6E63",
+      "color": "#F44336",
       "estimate": {
         "estimate": "PT0S",
         "type": "AUTO"
       },
-      "archived": true,
-      "duration": "PT53H23M40S",
-      "clientName": "A-1 Sales team",
+      "archived": false,
+      "duration": "PT1H",
+      "clientName": "",
       "note": "",
-      "costRate": {
-        "amount": 0,
-        "currency": "INR"
-      },
+      "costRate": null,
       "timeEstimate": {
         "estimate": "PT0S",
         "type": "AUTO",
@@ -50,6 +48,11 @@
       "estimateReset": null,
       "template": false,
       "public": true
-    }
+    },
+    "task": {
+      "id": "69eb4c1703616156f9f9a25d",
+      "name": "General"
+    },
+    "state": "pending"
   }
 }

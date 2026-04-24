@@ -3,8 +3,8 @@ import json
 import re
 from datetime import datetime
 import pytz
+import requests
 from dateutil import parser
-from openai import OpenAI
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -12,26 +12,24 @@ load_dotenv()
 MODEL = os.getenv("OPENROUTER_MODEL")
 TIMEZONE = "Asia/Kolkata"
 
-def get_client():
-    api_key = os.getenv("OPENROUTER_API_KEY")
-    if not api_key:
-        print("⚠️ WARNING: OPENROUTER_API_KEY is not set!")
-        api_key = "MISSING_KEY"
-    
-    return OpenAI(
-        api_key=api_key,
-        base_url=os.getenv("OPENROUTER_BASE_URL") or "https://openrouter.ai/api/v1"
-    )
-
 TIMEZONE = "Asia/Kolkata"
 
 
 def safe_json_parse(content):
-    content = content.replace("```json", "").replace("```", "").strip()
-    match = re.search(r"\{.*\}", content, re.DOTALL)
-    if match:
-        content = match.group(0)
-    return json.loads(content)
+    try:
+        # Try finding JSON within markdown blocks
+        match = re.search(r"```(?:json)?\s*(\{.*?\})\s*```", content, re.DOTALL)
+        if match:
+            return json.loads(match.group(1))
+        
+        # Fallback to finding first { and last }
+        match = re.search(r"(\{.*\})", content, re.DOTALL)
+        if match:
+            return json.loads(match.group(1))
+            
+        return json.loads(content)
+    except:
+        return {}
 
 
 def fallback_parse(text):
@@ -88,7 +86,8 @@ Rules:
   If no time mentioned, use current time.
 - Description should be a short summary.
 
-Return ONLY JSON:
+Return ONLY the raw JSON object. Do NOT include any conversational text, explanations, or markdown formatting blocks.
+
 {
   "project": "",
   "task": "",
@@ -99,21 +98,36 @@ Return ONLY JSON:
 """
 
     try:
-        client = get_client()
+        api_key = os.getenv("OPENROUTER_API_KEY")
+        base_url = os.getenv("OPENROUTER_BASE_URL") or "https://openrouter.ai/api/v1"
         model = os.getenv("OPENROUTER_MODEL") or "google/gemini-2.0-flash-001"
-        
-        response = client.chat.completions.create(
-            model=model,
-            messages=[
-                {"role": "system", "content": "You are a strict JSON generator for Clockify time entries."},
-                {"role": "user", "content": prompt}
-            ],
-            temperature=0.2
+
+        if not api_key:
+            print("⚠️ OPENROUTER_API_KEY is missing!", flush=True)
+            return fallback_parse(text)
+
+        # Using direct requests to avoid DLL/jiter issues with openai SDK
+        response = requests.post(
+            f"{base_url.rstrip('/')}/chat/completions",
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json"
+            },
+            json={
+                "model": model,
+                "messages": [
+                    {"role": "system", "content": "You are a strict JSON generator for Clockify time entries."},
+                    {"role": "user", "content": prompt}
+                ],
+                "temperature": 0.2
+            },
+            timeout=30
         )
-
-        content = response.choices[0].message.content
+        
+        response.raise_for_status()
+        content = response.json()["choices"][0]["message"]["content"]
+        
         print("🧠 RAW AI:", content, flush=True)
-
         return safe_json_parse(content)
 
     except Exception as e:

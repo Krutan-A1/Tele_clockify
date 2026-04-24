@@ -1,3 +1,4 @@
+import platform
 import os
 import json
 import threading
@@ -16,8 +17,11 @@ app = Flask(__name__)
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN").strip()
 TELEGRAM_API_URL = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}"
 
-# persistence file - Using /tmp ensures it works on Render's ephemeral filesystem
-PENDING_FILE = "/tmp/pending_context.json"
+# persistence file - Using /tmp for Linux/Render, local folder for Windows
+if platform.system() == "Windows":
+    PENDING_FILE = "pending_context.json"
+else:
+    PENDING_FILE = "/tmp/pending_context.json"
 
 def load_pending():
     if os.path.exists(PENDING_FILE):
@@ -42,15 +46,19 @@ def save_pending(context):
 # ---------------------------
 
 def send(chat_id, text, keyboard=None):
-    payload = {"chat_id": chat_id, "text": text}
-    if keyboard:
-        payload["reply_markup"] = json.dumps(keyboard)
-
-    requests.post(f"{TELEGRAM_API_URL}/sendMessage", data=payload)
-
+    try:
+        payload = {"chat_id": chat_id, "text": text}
+        if keyboard:
+            payload["reply_markup"] = json.dumps(keyboard)
+        requests.post(f"{TELEGRAM_API_URL}/sendMessage", data=payload, timeout=10)
+    except Exception as e:
+        print(f"⚠️ Send error: {e}", flush=True)
 
 def answer(cb_id):
-    requests.post(f"{TELEGRAM_API_URL}/answerCallbackQuery", data={"callback_query_id": cb_id})
+    try:
+        requests.post(f"{TELEGRAM_API_URL}/answerCallbackQuery", data={"callback_query_id": cb_id}, timeout=5)
+    except:
+        pass
 
 
 def keyboard():
@@ -68,11 +76,14 @@ def norm(x):
 
 
 def match(name, items):
-    if not name:
+    if not name or not isinstance(items, list):
         return None
 
     name = norm(name)
-    mapping = {norm(i["name"]): i for i in items}
+    
+    # Safety: filter out items that don't have a 'name' key
+    valid_items = [i for i in items if isinstance(i, dict) and "name" in i]
+    mapping = {norm(i["name"]): i for i in valid_items}
 
     if name in mapping:
         return mapping[name]
@@ -101,11 +112,73 @@ def home():
 def webhook():
     try:
         data = request.get_json(silent=True) or {}
-        print("🔥 Incoming:", json.dumps(data, indent=2), flush=True)
+        event_type = "message" if "message" in data else ("callback_query" if "callback_query" in data else "unknown")
+        print(f"📢 RECEIVED TYPE: {event_type}", flush=True)
+        print("🔥 Incoming Raw:", json.dumps(data, indent=1), flush=True)
 
         pending_context = load_pending()
 
-        # MESSAGE
+        # 1. BUTTONS (Check this first)
+        if "callback_query" in data:
+            cb = data["callback_query"]
+            chat_id = str(cb["message"]["chat"]["id"])
+            action = cb["data"]
+            
+            print(f"🔘 Button Clicked by {chat_id}: {action}", flush=True)
+
+            # Give immediate visual feedback in Telegram (shows a small "Processing" toast)
+            try:
+                requests.post(f"{TELEGRAM_API_URL}/answerCallbackQuery", 
+                              data={"callback_query_id": cb["id"], "text": "⌛ Processing..."}, 
+                              timeout=5)
+            except:
+                pass
+
+            pending = pending_context.get(chat_id)
+
+            if not pending:
+                print(f"⚠️ No pending task found for chat_id: {chat_id}", flush=True)
+                send(chat_id, "❌ No pending task found. Please send a new message.")
+                return "OK", 200
+
+            if action == "cancel":
+                pending_context.pop(chat_id, None)
+                save_pending(pending_context)
+                send(chat_id, "❌ Cancelled")
+                return "OK", 200
+
+            if action == "edit":
+                pending["state"] = "editing"
+                save_pending(pending_context)
+                send(chat_id, "✏️ What would you like to change? (Just tell me the update, e.g. 'change duration to 45 mins')")
+                return "OK", 200
+
+            if action == "confirm":
+                print(f"🚀 Attempting Clockify log for {chat_id}...", flush=True)
+                # Calculate end time based on duration (minimum 1 minute to avoid Clockify errors)
+                duration = int(pending["parsed"].get("duration_minutes", 1))
+                if duration < 1: duration = 1
+                
+                payload = {
+                    "description": pending["parsed"]["description"],
+                    "duration_minutes": duration,
+                    "projectId": pending["project"]["id"],
+                    "taskId": pending["task"]["id"],
+                    "start_time": pending["parsed"].get("start_time")
+                }
+
+                status, resp = create_time_entry(payload)
+
+                if 200 <= status < 300:
+                    send(chat_id, "✅ Entry created successfully in Clockify!")
+                    pending_context.pop(chat_id, None)
+                    save_pending(pending_context)
+                else:
+                    send(chat_id, f"❌ Clockify Error:\n{resp}")
+
+            return "OK", 200
+
+        # 2. MESSAGES
         if "message" in data and "text" in data["message"]:
             chat_id = str(data["message"]["chat"]["id"])
             text = data["message"]["text"]
@@ -121,6 +194,36 @@ def webhook():
                     return "OK", 200
                 elif text == "/start":
                     send(chat_id, "Welcome! Just tell me what you're working on, e.g., '2 hours on Project X task Y description Z'")
+                    return "OK", 200
+                elif text == "/confirm":
+                    # Manually trigger confirm logic
+                    print("⌨️ Manual /confirm command received", flush=True)
+                    pending = pending_context.get(chat_id)
+                    if pending:
+                        # Safety: duration minimum 1 min
+                        duration = int(pending["parsed"].get("duration_minutes", 1))
+                        if duration < 1: duration = 1
+                        
+                        payload = {
+                            "description": pending["parsed"]["description"],
+                            "duration_minutes": duration,
+                            "projectId": pending["project"]["id"],
+                            "taskId": pending["task"]["id"],
+                            "start_time": pending["parsed"].get("start_time")
+                        }
+                        status, resp = create_time_entry(payload)
+                        if 200 <= status < 300:
+                            send(chat_id, "✅ Entry created successfully via command!")
+                            pending_context.pop(chat_id, None)
+                            save_pending(pending_context)
+                        else:
+                            send(chat_id, f"❌ Failed:\n{resp}")
+                        return "OK", 200
+                elif text == "/cancel":
+                    print("⌨️ Manual /cancel command received", flush=True)
+                    pending_context.pop(chat_id, None)
+                    save_pending(pending_context)
+                    send(chat_id, "❌ Cancelled")
                     return "OK", 200
 
             # Handle Editing State
@@ -176,55 +279,6 @@ def webhook():
             )
 
             send(chat_id, msg, keyboard())
-            return "OK", 200
-
-        # BUTTON
-        if "callback_query" in data:
-            cb = data["callback_query"]
-            chat_id = str(cb["message"]["chat"]["id"])
-            action = cb["data"]
-            
-            print(f"🔘 Button Clicked by {chat_id}: {action}", flush=True)
-
-            answer(cb["id"])
-
-            pending = pending_context.get(chat_id)
-
-            if not pending:
-                print(f"⚠️ No pending task found for chat_id: {chat_id}", flush=True)
-                send(chat_id, "❌ No pending task")
-                return "OK", 200
-
-            if action == "cancel":
-                pending_context.pop(chat_id, None)
-                save_pending(pending_context)
-                send(chat_id, "❌ Cancelled")
-                return "OK", 200
-
-            if action == "edit":
-                pending["state"] = "editing"
-                save_pending(pending_context)
-                send(chat_id, "✏️ What would you like to change? (Just tell me the update)")
-                return "OK", 200
-
-            if action == "confirm":
-                payload = {
-                    "description": pending["parsed"]["description"],
-                    "duration_minutes": pending["parsed"]["duration_minutes"],
-                    "projectId": pending["project"]["id"],
-                    "taskId": pending["task"]["id"],
-                    "start_time": pending["parsed"].get("start_time")
-                }
-
-                status, resp = create_time_entry(payload)
-
-                if 200 <= status < 300:
-                    send(chat_id, "✅ Entry created")
-                    pending_context.pop(chat_id, None)
-                    save_pending(pending_context)
-                else:
-                    send(chat_id, f"❌ Failed:\n{resp}")
-
             return "OK", 200
 
     except Exception as e:

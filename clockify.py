@@ -93,23 +93,36 @@ def create_task(project_id, name):
 
 def create_time_entry(data):
     env = get_env()
+    from dateutil import parser
+    import pytz
+
     # Use provided start_time or default to now
     if "start_time" in data and data["start_time"]:
-        start_str = data["start_time"]
-        # Ensure it's in Z format
-        if "+" in start_str:
-            # Simple convert to Z for Clockify
-            from dateutil import parser
-            dt = parser.isoparse(start_str).astimezone(timezone.utc)
-            start_str = dt.isoformat().replace("+00:00", "Z")
+        try:
+            start_str = data["start_time"]
+            dt = parser.isoparse(start_str)
+            
+            # If no timezone is provided, assume Asia/Kolkata
+            if dt.tzinfo is None:
+                local_tz = pytz.timezone("Asia/Kolkata")
+                dt = local_tz.localize(dt)
+            
+            # Convert to UTC for Clockify
+            dt_utc = dt.astimezone(timezone.utc)
+            start_str = dt_utc.isoformat().replace("+00:00", "Z")
+        except Exception as e:
+            print(f"⚠️ Start time parse error: {e}, falling back to now", flush=True)
+            dt_utc = datetime.now(timezone.utc)
+            start_str = dt_utc.isoformat().replace("+00:00", "Z")
     else:
-        dt = datetime.now(timezone.utc)
-        start_str = dt.isoformat().replace("+00:00", "Z")
+        dt_utc = datetime.now(timezone.utc)
+        start_str = dt_utc.isoformat().replace("+00:00", "Z")
 
-    # Parse the start_str back to calculate end
-    from dateutil import parser
-    start_dt = parser.isoparse(start_str.replace("Z", "+00:00"))
-    end_dt = start_dt + timedelta(minutes=int(data["duration_minutes"]))
+    # Calculate end time based on duration (minimum 1 minute to avoid Clockify errors)
+    duration = int(data.get("duration_minutes", 1))
+    if duration < 1: duration = 1
+    
+    end_dt = dt_utc + timedelta(minutes=duration)
     end_str = end_dt.isoformat().replace("+00:00", "Z")
 
     payload = {
@@ -118,7 +131,8 @@ def create_time_entry(data):
         "end": end_str,
         "billable": False,
         "projectId": data["projectId"],
-        "taskId": data["taskId"]
+        "taskId": data["taskId"] if data.get("taskId") else None,
+        "type": "REGULAR"
     }
 
     print("➡️ CLOCKIFY PAYLOAD:", json.dumps(payload, indent=2), flush=True)
@@ -128,4 +142,4 @@ def create_time_entry(data):
 
     print(f"⬅️ CLOCKIFY RESPONSE ({res.status_code}):", res.text, flush=True)
 
-    return res.status_code, res.text
+    return res.status_code, res.text
