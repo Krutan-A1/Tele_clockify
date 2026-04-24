@@ -3,18 +3,27 @@ import json
 import re
 from datetime import datetime
 import pytz
+from dateutil import parser
 from openai import OpenAI
 from dotenv import load_dotenv
 
 load_dotenv()
 
-client = OpenAI(
-    api_key=os.getenv("OPENROUTER_API_KEY"),
-    base_url=os.getenv("OPENROUTER_BASE_URL")
-)
-
 MODEL = os.getenv("OPENROUTER_MODEL")
 TIMEZONE = "Asia/Kolkata"
+
+# Safety check for API key
+api_key = os.getenv("OPENROUTER_API_KEY")
+if not api_key:
+    # If missing, we'll try to use a placeholder to prevent crash at boot
+    # but actual AI calls will fail. This allows the server to at least start.
+    print("⚠️ WARNING: OPENROUTER_API_KEY is not set!")
+    api_key = "MISSING_KEY"
+
+client = OpenAI(
+    api_key=api_key,
+    base_url=os.getenv("OPENROUTER_BASE_URL") or "https://openrouter.ai/api/v1"
+)
 
 
 def safe_json_parse(content):
