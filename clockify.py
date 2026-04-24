@@ -10,9 +10,9 @@ def get_env():
     api_key = os.getenv("CLOCKIFY_API_KEY")
     
     if not workspace_id:
-        print("❌ CRITICAL: CLOCKIFY_WORKSPACE_ID is missing from environment!")
+        print("❌ CRITICAL: CLOCKIFY_WORKSPACE_ID is missing from environment!", flush=True)
     if not api_key:
-        print("❌ CRITICAL: CLOCKIFY_API_KEY is missing from environment!")
+        print("❌ CRITICAL: CLOCKIFY_API_KEY is missing from environment!", flush=True)
         
     return {
         "API_KEY": api_key,
@@ -80,7 +80,7 @@ def create_task(project_id, name):
     payload = {"name": name}
 
     res = requests.post(url, json=payload, headers=headers(), timeout=20)
-    print("➕ Create Task:", res.status_code, res.text)
+    print("➕ Create Task:", res.status_code, res.text, flush=True)
     task = res.json()
     
     # Update cache
@@ -121,11 +121,11 @@ def create_time_entry(data):
         "taskId": data["taskId"]
     }
 
-    print("➡️ CLOCKIFY PAYLOAD:", payload)
+    print("➡️ CLOCKIFY PAYLOAD:", json.dumps(payload, indent=2), flush=True)
 
     url = f"{env['BASE_URL']}/workspaces/{env['WORKSPACE_ID']}/time-entries"
     res = requests.post(url, json=payload, headers=headers(), timeout=20)
 
-    print("⬅️ CLOCKIFY RESPONSE:", res.status_code, res.text)
+    print(f"⬅️ CLOCKIFY RESPONSE ({res.status_code}):", res.text, flush=True)
 
     return res.status_code, res.text

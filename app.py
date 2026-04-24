@@ -101,7 +101,7 @@ def home():
 def webhook():
     try:
         data = request.get_json(silent=True) or {}
-        print("🔥 Incoming:", json.dumps(data, indent=2))
+        print("🔥 Incoming:", json.dumps(data, indent=2), flush=True)
 
         pending_context = load_pending()
 
@@ -110,7 +110,7 @@ def webhook():
             chat_id = str(data["message"]["chat"]["id"])
             text = data["message"]["text"]
             
-            print(f"📩 Message from {chat_id}: {text}")
+            print(f"📩 Message from {chat_id}: {text}", flush=True)
 
             # Handle Commands
             if text.startswith("/"):
@@ -134,7 +134,7 @@ def webhook():
             project_names = [p["name"] for p in projects]
 
             parsed = parse_message(text, project_names, previous_context=previous_parsed)
-            print("🧠 Parsed:", parsed)
+            print("🧠 Parsed:", parsed, flush=True)
 
             project = match(parsed.get("project"), projects)
 
@@ -184,14 +184,14 @@ def webhook():
             chat_id = str(cb["message"]["chat"]["id"])
             action = cb["data"]
             
-            print(f"🔘 Button Clicked by {chat_id}: {action}")
+            print(f"🔘 Button Clicked by {chat_id}: {action}", flush=True)
 
             answer(cb["id"])
 
             pending = pending_context.get(chat_id)
 
             if not pending:
-                print(f"⚠️ No pending task found for chat_id: {chat_id}")
+                print(f"⚠️ No pending task found for chat_id: {chat_id}", flush=True)
                 send(chat_id, "❌ No pending task")
                 return "OK", 200
 
